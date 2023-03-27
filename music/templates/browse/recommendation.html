@@ -1,0 +1,46 @@
+
+{% extends "layout.html" %}
+
+{% block title %}Recommendations{% endblock %}
+
+{% block head %} 
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <div class="body">
+        <table cellspacing='0'>
+            <tr class="center no-hover">
+                <th class="center"><h1>RECOMMENDATIONS</h1></th>
+            </tr>
+            <tr class="center no-hover">
+                <th class="center"><h2>Showing 10 new recommendations!</h2></th>
+            </tr>
+            <tr >
+                <th>Track ID</th>
+                <th>Track Name</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Duration</th>
+                <th id="review">Reviews</th>
+            </tr>
+            {% if length == 0 %}
+            <tr id="spacer"></tr>
+            <tr class="center">
+                <th class="center"><h3>Start reviewing tracks to get recommendations!</h3></td>
+            </tr>
+            {% endif %}
+            {% for i in tracks %}
+                <tr>
+                    <td>{{ i.track_id }}</td>
+                    <td>{{ i.title }}</td>
+                    <td>{{ i.artist.full_name }}</td>
+                    <td>{{ i.album.title }}</td>
+                    <td>{{ i.track_duration//60 }}:{{ "{:02d}".format(i.track_duration%60) }}</td>
+                    <td id="review"><a id="clickable" href="{{ url_for('browse_bp.browse_track', variable=i.track_id) }}">{{ "{:.1f}".format(i.average_rating()) }}/5 ({{ i.get_num_of_reviews() }})</a></td>
+                    </a>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

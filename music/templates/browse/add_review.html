@@ -1,0 +1,41 @@
+<!--
+    <track_object> refers to the Track object
+-->
+
+{% extends "layout.html" %}
+{% block title %}Add Review{% endblock %}
+{% block head %} 
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <div class="body">
+        <table>
+            <tr class="no-hover">
+                <td style="width:500px;text-align:center;">
+                    <h1>LEAVE A REVIEW FOR: </h1>
+                </td>
+            </tr>
+            <tr class="no-hover">
+                <td style="width:auto;text-align:center;""><h1>{{ track_object.title.upper() }} - {{ track_object.artist.full_name.upper() }}</h1></td>
+            </tr>
+            <tr class="no-hover" style="display:grid;">
+                <td style="display:flex;margin:0 auto;text-align:center;">
+                    <div class="form-field">
+                    <form method="POST" action="{{ handler_url }}">
+                        {{ form.csrf_token }}
+                        <div class="form-field">
+                            {{form.out_of_5.label}} {{form.out_of_5}}
+                        </div>
+                        <div class="form-field">
+                            {{form.review_comment.label}} {{form.review_comment}}
+                        </div>
+                        {{ form.submit }}
+                    </form>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+{% endblock %}

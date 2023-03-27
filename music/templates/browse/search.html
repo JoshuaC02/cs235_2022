@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block title %}Search{% endblock %}
+{% block head %} 
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <div class="body">
+        <table class="browse" cellspacing='0'>
+            <tr class="center no-hover">
+                <th class="center">
+                    <h1>{{form.search.label}}</h1>
+                </th>
+            </tr>
+            <tr class="center no-hover">
+                <th class="center">
+                    <form method="POST" action={{hander_url}}>
+                        {{form.csrf_token}}
+                        {{form.search}}
+                        {{form.submit}}
+                    </form>
+                </th>
+            </tr>
+            <tr>
+                <th>Track ID</th>
+                <th>Track Name</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Duration</th>
+                <th id="review">Reviews</th>
+                {% if 'username' in session %}
+                    <th id="review">Add Review</th>
+                {% endif %}
+            </tr>
+            {% if length == 0 %}
+            <tr id="spacer"></tr>
+            <tr class="center">
+                <th class="center"><h3>{{ message }}</h3></td>
+            </tr>
+            {% endif %}
+            {% for i in return_list %}
+            <tr>
+                <td>{{ i.track_id }}</td>
+                <td>{{ i.title }}</td>
+                <td>{{ i.artist.full_name }}</td>
+                <td>{{ i.album.title }}</td>
+                <td>{{ i.track_duration//60 }}:{{ "{:02d}".format(i.track_duration%60) }}</td>
+                <td id="review"><a id="clickable" href="{{ url_for('browse_bp.browse_track', variable=i.track_id) }}">{{ "{:.1f}".format(i.average_rating()) }}/5 ({{ i.get_num_of_reviews() }})</a></td>
+                {% if 'username' in session %}
+                    <td id="review"><a id="clickable" href="{{ url_for('browse_bp.add_review', variable=i.track_id) }}" >Add Review</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

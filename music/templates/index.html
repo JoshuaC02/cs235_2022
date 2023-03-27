@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+{% block head %} 
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <div class="body">
+        {% if username != None %}
+            <h1>Welcome to MusicWiki, {{ username }}</h1>
+        {% else %}
+            <h1>Welcome to MusicWiki</h1>
+        {% endif %}
+    </div>
+{% endblock %}

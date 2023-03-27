@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}Page Not Found{% endblock %}
+{% block head %} 
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <div class="body">
+        <table>
+            <tr class="no-hover">
+                <th style="text-align:center"><h1>Page not found!</h1></th>
+            </tr>
+            <tr class="no-hover">
+                <td style="text-align: center;"><h3><a id="clickable" href="{{ url_for('home') }}">Click here to go back</a></h3></td>
+            </tr>
+        </table>
+    
+{% endblock %}

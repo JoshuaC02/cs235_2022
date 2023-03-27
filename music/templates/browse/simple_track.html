@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block title %}Track{% endblock %}
+{% block head %} 
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <div class="body">
+        <table cellspacing='0' class="browse" style="top:0;padding-top:50px;">
+            <tr class="center no-hover">
+                <th class="center"><h1 class="track_header">{{ track.title }} - {{track.artist.full_name}}</h1></td>
+            </tr>
+            <tr class="center no-hover">
+                <th class="center"><p class="track_header">Track Duration: <b>{{ track.track_duration//60 }}:{{ "{:02d}".format(track.track_duration%60) }}</b></p></td>
+            </tr>
+            <tr class="center no-hover">
+                <th class="center"><p class="track_header">Track Rating: <b>{{ "{:.1f}".format(track.average_rating()) }}/5 ({{ track.get_num_of_reviews() }})</b></p></td>
+            </tr>
+            {% if 'username' in session %}
+            <tr class="center no-hover">
+                <th class="center">
+                    <h5><p class="track_header"><a id="clickable" href="{{ url_for('browse_bp.add_review', variable=track.track_id) }}" >Review this song!</a></p></h5>
+                </th>
+            </tr>
+            {% endif %}
+            <tr class="center no-hover">
+                <th class="center"><h2>Reviews:</h2></td>
+            </tr>
+            {% if track.get_num_of_reviews() == 0 %}
+                <tr id="spacer"></tr>
+                <tr class="center">
+                    <th class="center"><h2>No Reviews available!</h2></tr>
+                </tr>
+            {% elif track.get_num_of_reviews() > 10 %}
+                {% for review in track.reviews[0:10] %}
+                <tr>
+                    <td> {{review.rating}}/5 by <b>{{review.review_user.user_name}}</b>: </td>
+                    <td class="track_subpage">{{ review.review_text }}</td>
+                </tr>
+                {% endfor %}
+                <tr class="center no-hover">
+                    <th class="center track_subpage">Showing 10 reviews</td>
+                </tr>
+            {% else %}
+                {% for review in track.reviews %}
+                <tr>
+                    <td>{{review.rating}}/5 by <b>{{review.review_user.user_name}}</b>: </td>
+                    <td class="track_subpage">{{ review.review_text }}</td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+        <!--
+        <div class="track_subpage">
+            <h1 class="track_header">{{ track.title }} - {{track.artist.full_name}}</h1>
+            <p class="track_header">Track Duration: <b>{{ track.track_duration//60 }}:{{ "{:02d}".format(track.track_duration%60) }}</b></p>
+            <p class="track_header">Track Rating: <b>{{ "{:.1f}".format(track.average_rating()) }}/5 ({{ track.get_num_of_reviews() }})</b></p>
+            
+            {% if 'username' in session %}
+            <p class="track_header"><a id="clickable" href="{{ url_for('browse_bp.add_review', variable=track.track_id) }}" >Review this song!</a></p>
+            {% endif %}
+            <h2>Reviews:</h2>
+                
+            <table cellspacing='0'>
+            {% if track.get_num_of_reviews() == 0 %}
+                <tr id="spacer"></tr>
+                <tr>
+                    <th><h2>No Reviews available!</h2></tr>
+                </tr>
+            {% elif track.get_num_of_reviews() > 10 %}
+                {% for review in track.reviews[0:10] %}
+                <tr>
+                    <td style="height:30px;word-wrap:break-word;width:750px;padding:2px;"> {{review.rating}}/5 by <b>{{review.review_user.user_name}}</b>: {{ review.review_text}}</td>
+                </tr>
+                {% endfor %}
+                <tr class="no-hover">
+                <td style="height:30px">Showing 10 reviews</td>
+                </tr>
+            {% else %}
+                {% for review in track.reviews %}
+                <tr>
+                    <td style="height:30px;word-wrap:break-word;width:750px;margin:10px;"> {{review.rating}}/5 by <b>{{review.review_user.user_name}}</b>: {{ review.review_text}}</td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+            </table>
+        </div>
+        -->
+    </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+<div class="header">
+    <!--
+        <h2>
+            <a href="{{ url_for('home') }}">MusicWiki</a>
+        </h2>
+    -->
+        <table class="header">
+            <tr>
+                <th><a href="{{ url_for('home') }}" >Home</a></th>
+                <th><a href="{{ url_for('browse_bp.new_browse') }}" >Browse</a></th>
+                <th><a href="{{ url_for('browse_bp.search') }}">Search</a></th>
+                <th><a href="{{ url_for('browse_bp.recommendation') }}">Recommended</a>
+                <th><a href="{{ url_for('authentication_bp.register') }}" >Register</a></th>
+                <th><a href="{{ url_for('authentication_bp.login') }}" >Sign in</a></th>
+                <th><a href="{{ url_for('authentication_bp.logout') }}" >Sign out</a></th>
+                
+            </tr>
+        </table>
+    </div>
